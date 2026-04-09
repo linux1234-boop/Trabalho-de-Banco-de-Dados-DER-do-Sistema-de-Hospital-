@@ -1,2 +1,13 @@
 Levantamentos de Requisitos ( Mini-Mundo )
   Requisitos Funcionais (RF)
+RF01: O sistema deve permitir o cadastro de pacientes e seu histórico clínico completo.
+RF02: O sistema deve registrar consultas médicas associando um paciente, um médico e uma sala.
+RF03: O sistema deve controlar a ocupação de leitos em tempo real (disponível, ocupado, limpeza).
+RF04: O sistema deve permitir a prescrição de medicamentos durante a consulta ou internação.
+
+  Regras de Negócios (RN)
+RN01: Um médico só pode realizar cirurgias se possuir uma especialidade cirúrgica cadastrada.
+RN02: Pacientes menores de 12 anos devem obrigatoriamente ter um responsável legal vinculado ao cadastro.
+RN03: Um quarto não pode exceder sua capacidade máxima de leitos cadastrada.
+RN04: Medicamentos de tarja preta exigem o registro do número da receita e CRM do médico prescritor.
+RN05: O sistema deve impedir o agendamento de um médico em dois horários simultâneos.
