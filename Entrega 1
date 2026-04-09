@@ -1,4 +1,20 @@
 Levantamentos de Requisitos ( Mini-Mundo )
+Eu, como diretor do Hospital Central, necessito de um sistema robusto para organizar nossa operação que cresceu drasticamente.
+Atualmente, perdemos muito tempo em processos manuais.
+Preciso que o sistema gerencie nossos funcionários, que são divididos entre médicos, enfermeiros e equipe administrativa.
+É vital que cada funcionário tenha seu registro de salário e cargo, mas que médicos tenham seu CRM e enfermeiros seu COREN devidamente mapeados.
+Nossos pacientes são o núcleo do hospital.
+O sistema deve registrar não apenas os dados básicos, mas também criar um prontuário único para cada um, onde ficarão salvos os históricos de consultas e exames realizados.
+Uma consulta sempre envolve um médico, um paciente e uma data/hora específica.
+Além disso, temos uma área de internação complexa.
+Preciso controlar quais quartos estão disponíveis e em quais alas eles se localizam.
+Cada quarto possui vários leitos, e o sistema deve me dizer exatamente qual paciente está ocupando qual leito no momento.
+Por fim, a gestão de insumos é crítica.
+O sistema deve catalogar nossos medicamentos e seus respectivos fornecedores.
+Sempre que um médico emitir uma receita, o estoque deve ser consultado. 
+Quero um sistema que impeça erros humanos, como agendar dois pacientes para o mesmo médico no mesmo horário ou internar alguém em um leito já ocupado.
+
+
   Requisitos Funcionais (RF)
 RF01: O sistema deve permitir o cadastro de pacientes e seu histórico clínico completo.
 RF02: O sistema deve registrar consultas médicas associando um paciente, um médico e uma sala.
