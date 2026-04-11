@@ -1,29 +1,40 @@
 Levantamentos de Requisitos ( Mini-Mundo )
-Eu, como diretor do Hospital Central, necessito de um sistema robusto para organizar nossa operação que cresceu drasticamente.
-Atualmente, perdemos muito tempo em processos manuais.
-Preciso que o sistema gerencie nossos funcionários, que são divididos entre médicos, enfermeiros e equipe administrativa.
-É vital que cada funcionário tenha seu registro de salário e cargo, mas que médicos tenham seu CRM e enfermeiros seu COREN devidamente mapeados.
-Nossos pacientes são o núcleo do hospital.
-O sistema deve registrar não apenas os dados básicos, mas também criar um prontuário único para cada um, onde ficarão salvos os históricos de consultas e exames realizados.
-Uma consulta sempre envolve um médico, um paciente e uma data/hora específica.
-Além disso, temos uma área de internação complexa.
-Preciso controlar quais quartos estão disponíveis e em quais alas eles se localizam.
-Cada quarto possui vários leitos, e o sistema deve me dizer exatamente qual paciente está ocupando qual leito no momento.
-Por fim, a gestão de insumos é crítica.
-O sistema deve catalogar nossos medicamentos e seus respectivos fornecedores.
-Sempre que um médico emitir uma receita, o estoque deve ser consultado. 
-Quero um sistema que impeça erros humanos, como agendar dois pacientes para o mesmo médico no mesmo horário ou internar alguém em um leito já ocupado.
+Eu, como diretor do Hospital Central, necessito de um sistema robusto para organizar nossa operação que cresceu drasticamente. Atualmente, perdemos muito tempo em processos manuais.
+Preciso que o sistema gerencie nossos funcionários, que são divididos entre médicos, enfermeiros e equipe administrativa — cada grupo com suas informações específicas, mas todos compartilhando dados comuns como nome, CPF, salário e cargo. É vital que médicos tenham seu CRM e especialidade registrados, enfermeiros seu COREN e nível de formação, e a equipe administrativa seu setor e nível de acesso. Cada funcionário deve estar vinculado a um departamento do hospital e ter seus plantões devidamente registrados com data, horário de início e fim.
+Nossos pacientes são o núcleo do hospital. O sistema deve registrar seus dados pessoais e criar um prontuário único para cada um, onde ficarão salvos os históricos de consultas e exames realizados. Uma consulta sempre é realizada por um médico, com participação de um paciente, e pode gerar uma ou mais receitas. Cada receita prescreve medicamentos, que por sua vez possuem seus respectivos fornecedores cadastrados. O estoque de cada medicamento deve ser monitorado para evitar desabastecimento.
+A gestão de internações é crítica e envolve três elementos simultâneos: o paciente internado, a localização — que registra a ala, o quarto, o leito, o andar e o bloco — e o enfermeiro responsável. Esses três elementos juntos formam o registro de internação, que também guarda a data de entrada, a data de saída e o motivo da internação.
+Quero um sistema que impeça erros como agendar dois pacientes para o mesmo médico no mesmo horário, internar um paciente em uma localização já ocupada ou escalar um funcionário para dois plantões simultâneos.
 
 
   Requisitos Funcionais (RF)
-RF01: O sistema deve permitir o cadastro de pacientes e seu histórico clínico completo.
-RF02: O sistema deve registrar consultas médicas associando um paciente, um médico e uma sala.
-RF03: O sistema deve controlar a ocupação de leitos em tempo real (disponível, ocupado, limpeza).
-RF04: O sistema deve permitir a prescrição de medicamentos durante a consulta ou internação.
+RF01 — O sistema deve cadastrar funcionários com nome, CPF, data de nascimento, telefone, salário e cargo.
+RF02 — O sistema deve diferenciar funcionários entre médicos (CRM, especialidade, turno), enfermeiros (COREN, turno, nível de formação) e administrativos (setor, nível de acesso, ramal).
+RF03 — O sistema deve vincular cada funcionário a um departamento do hospital.
+RF04 — O sistema deve registrar os plantões de cada funcionário com data, horário de início, horário de fim e tipo.
+RF05 — O sistema deve cadastrar pacientes com nome, CPF, data de nascimento, telefone e tipo sanguíneo.
+RF06 — O sistema deve criar automaticamente um prontuário único para cada paciente no momento do seu cadastro.
+RF07 — O sistema deve registrar consultas vinculadas a um médico e a um paciente, com data, hora, tipo e status.
+RF08 — O sistema deve registrar exames no prontuário do paciente, vinculados ao médico solicitante, com tipo, data de realização e resultado.
+RF09 — O sistema deve permitir que médicos emitam receitas a partir de uma consulta, com data de emissão, validade e posologia.
+RF10 — O sistema deve cadastrar medicamentos com nome, princípio ativo e quantidade em estoque, associados a seus fornecedores.
+RF11 — O sistema deve cadastrar fornecedores com nome da empresa, CNPJ, telefone e e-mail.
+RF12 — O sistema deve registrar internações vinculando simultaneamente um paciente, uma localização e um enfermeiro responsável.
+RF13 — O sistema deve cadastrar localizações com ala, quarto, leito, andar e bloco.
+RF14 — O sistema deve alertar quando o estoque de um medicamento atingir o nível mínimo.
+RF15 — O sistema deve permitir consultar o histórico completo de consultas, exames e internações de um paciente pelo seu prontuário.
 
   Regras de Negócios (RN)
-RN01: Um médico só pode realizar cirurgias se possuir uma especialidade cirúrgica cadastrada.
-RN02: Pacientes menores de 12 anos devem obrigatoriamente ter um responsável legal vinculado ao cadastro.
-RN03: Um quarto não pode exceder sua capacidade máxima de leitos cadastrada.
-RN04: Medicamentos de tarja preta exigem o registro do número da receita e CRM do médico prescritor.
-RN05: O sistema deve impedir o agendamento de um médico em dois horários simultâneos.
+RN01 — Não é permitido cadastrar dois funcionários com o mesmo CPF.
+RN02 — Um médico só pode ter uma consulta agendada por vez — não é permitido agendar dois pacientes para o mesmo médico no mesmo horário.
+RN03 — Um funcionário não pode estar escalado em dois plantões com horários simultâneos.
+RN04 — Todo paciente deve ter obrigatoriamente um prontuário vinculado; um prontuário não pode existir sem um paciente associado.
+RN05 — Uma consulta só pode ser registrada se houver um médico e um paciente válidos cadastrados no sistema.
+RN06 — Um exame só pode ser solicitado por um médico cadastrado no sistema.
+RN07 — Uma receita só pode ser emitida por um médico e deve estar obrigatoriamente vinculada a uma consulta.
+RN08 — Não é permitido internar um paciente em uma localização que já esteja ocupada.
+RN09 — Uma internação deve obrigatoriamente estar vinculada a um paciente, uma localização e um enfermeiro responsável — os três elementos são obrigatórios.
+RN10 — Não é permitido cadastrar dois fornecedores com o mesmo CNPJ.
+RN11 — Não é permitido cadastrar dois medicamentos com o mesmo nome e princípio ativo.
+RN12 — O estoque de um medicamento não pode ser atualizado para um valor negativo.
+RN13 — Um funcionário deve pertencer a exatamente um departamento.
+RN14 — Médicos, enfermeiros e administrativos devem obrigatoriamente estar vinculados a um registro de funcionário — não podem existir de forma independente.
