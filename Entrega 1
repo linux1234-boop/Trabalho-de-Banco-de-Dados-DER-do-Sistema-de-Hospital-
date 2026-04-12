@@ -1,8 +1,13 @@
 Levantamentos de Requisitos ( Mini-Mundo )
 Eu, como diretor do Hospital Central, necessito de um sistema robusto para organizar nossa operação que cresceu drasticamente. Atualmente, perdemos muito tempo em processos manuais.
-Preciso que o sistema gerencie nossos funcionários, que são divididos entre médicos, enfermeiros e equipe administrativa — cada grupo com suas informações específicas, mas todos compartilhando dados comuns como nome, CPF, salário e cargo. É vital que médicos tenham seu CRM e especialidade registrados, enfermeiros seu COREN e nível de formação, e a equipe administrativa seu setor e nível de acesso. Cada funcionário deve estar vinculado a um departamento do hospital e ter seus plantões devidamente registrados com data, horário de início e fim.
-Nossos pacientes são o núcleo do hospital. O sistema deve registrar seus dados pessoais e criar um prontuário único para cada um, onde ficarão salvos os históricos de consultas e exames realizados. Uma consulta sempre é realizada por um médico, com participação de um paciente, e pode gerar uma ou mais receitas. Cada receita prescreve medicamentos, que por sua vez possuem seus respectivos fornecedores cadastrados. O estoque de cada medicamento deve ser monitorado para evitar desabastecimento.
-A gestão de internações é crítica e envolve três elementos simultâneos: o paciente internado, a localização — que registra a ala, o quarto, o leito, o andar e o bloco — e o enfermeiro responsável. Esses três elementos juntos formam o registro de internação, que também guarda a data de entrada, a data de saída e o motivo da internação.
+Preciso que o sistema gerencie nossos funcionários, que são divididos entre médicos, enfermeiros e equipe administrativa — cada grupo com suas informações específicas, mas todos compartilhando dados comuns como nome, CPF, salário e cargo. 
+É vital que médicos tenham seu CRM e especialidade registrados, enfermeiros seu COREN e nível de formação, e a equipe administrativa seu setor e nível de acesso. 
+Cada funcionário deve estar vinculado a um departamento do hospital e ter seus plantões devidamente registrados com data, horário de início e fim.
+Nossos pacientes são o núcleo do hospital. O sistema deve registrar seus dados pessoais e criar um prontuário único para cada um, onde ficarão salvos os históricos de consultas e exames realizados. 
+Uma consulta sempre é realizada por um médico, com participação de um paciente, e pode gerar uma ou mais receitas. 
+Cada receita prescreve medicamentos, que por sua vez possuem seus respectivos fornecedores cadastrados. O estoque de cada medicamento deve ser monitorado para evitar desabastecimento.
+A gestão de internações é crítica e envolve três elementos simultâneos: o paciente internado, a localização — que registra a ala, o quarto, o leito, o andar e o bloco — e o enfermeiro responsável. 
+Esses três elementos juntos formam o registro de internação, que também guarda a data de entrada, a data de saída e o motivo da internação.
 Quero um sistema que impeça erros como agendar dois pacientes para o mesmo médico no mesmo horário, internar um paciente em uma localização já ocupada ou escalar um funcionário para dois plantões simultâneos.
 
 
