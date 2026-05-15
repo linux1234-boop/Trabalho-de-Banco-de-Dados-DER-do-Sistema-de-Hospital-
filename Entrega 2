@@ -1,3 +1,157 @@
 transformação do Diagrama Entidade-Relacionamento (DER)
 desenvolvido na Entrega 1 em um Esquema Relacional (lógico) e aplicar as regras de
 normalização para eliminar redundâncias e anomalias de atualização.
+
+
+
+
+##*1. Mapeamento para o Modelo Relacional (Esquema Lógico)*##
+Abaixo apresentamos o mapeamento das entidades e relacionamentos para o modelo relacional, seguindo as
+convenções de chaves primárias (negrito + sublinhado) e chaves estrangeiras (sufixo _FK, sem sublinhado).
+
+*Núcleo de Funcionários e Estrutura*
+• departamento (id_depto, nome)
+• funcionario (cpf_func, nome, data_nasc, telefone, salario, cargo, id_depto_FK)
+• medico (cpf_func_FK, crm, especialidade, turno)
+• enfermeiro (cpf_func_FK, coren, turno, nivel_formacao)
+• administrativo (cpf_func_FK, setor, nivel_acesso, ramal)
+• plantao (id_plantao, data, hora_inicio, hora_fim, tipo, cpf_func_FK)
+Obs.: em medico, enfermeiro e administrativo, cpf_func_FK é simultaneamente PK e FK → funcionario(cpf_func).
+
+
+*Núcleo de Pacientes e Atendimento*
+• paciente (cpf_paciente, nome, data_nasc, telefone, tipo_sanguineo)
+• prontuario (id_prontuario, cpf_paciente_FK)
+• consulta (id_consulta, data, hora, tipo, status, cpf_medico_FK, cpf_paciente_FK)
+• exame (id_exame, tipo, data_realizacao, resultado, id_prontuario_FK, cpf_medico_FK)
+
+
+*Medicamentos e Receituário*
+A relação N:1 entre Medicamento e Fornecedor é resolvida com FK direta em medicamento. A relação N:N entre
+Receita e Medicamento origina item_receita com PK composta. A posologia fica em item_receita pois pode variar
+por medicamento prescrito.
+• fornecedor (cnpj, nome_empresa, telefone, email)
+• medicamento (id_medicamento, nome, principio_ativo, qtd_estoque,
+cnpj_fornecedor_FK)
+• receita (id_receita, data_emissao, validade, id_consulta_FK)
+• item_receita (id_receita_FK, id_medicamento_FK, posologia)
+Obs.: em item_receita, a PK é composta pelos dois atributos: id_receita_FK e id_medicamento_FK. 
+
+Ambos estão sublinhados.
+
+A posologia foi movida para cá pois a dose pode variar por medicamento.
+Internação e Localização
+A internação vincula Paciente, Localização e Enfermeiro. Possui PK própria (id_internacao); as três FKs não fazem
+parte da PK e não são sublinhadas.
+• localizacao (id_local, ala, quarto, leito, andar, bloco)
+• internacao (id_internacao, data_entrada, data_saida, motivo, cpf_paciente_FK,
+id_local_FK, cpf_enfermeiro_FK)
+
+*Esquema Relacional Completo (antes da normalização)*
+departamento (id_depto, nome)
+funcionario (cpf_func, nome, data_nasc, telefone, salario, cargo, id_depto_FK)
+medico (cpf_func_FK, crm, especialidade, turno)
+enfermeiro (cpf_func_FK, coren, turno, nivel_formacao)
+administrativo (cpf_func_FK, setor, nivel_acesso, ramal)
+plantao (id_plantao, data, hora_inicio, hora_fim, tipo, cpf_func_FK)
+paciente (cpf_paciente, nome, data_nasc, telefone, tipo_sanguineo)
+prontuario (id_prontuario, cpf_paciente_FK)
+consulta (id_consulta, data, hora, tipo, status, cpf_medico_FK, cpf_paciente_FK)
+exame (id_exame, tipo, data_realizacao, resultado, id_prontuario_FK,
+cpf_medico_FK)
+fornecedor (cnpj, nome_empresa, telefone, email)
+medicamento (id_medicamento, nome, principio_ativo, qtd_estoque,
+cnpj_fornecedor_FK)
+receita (id_receita, data_emissao, validade, id_consulta_FK)
+item_receita (id_receita_FK, id_medicamento_FK, posologia)
+localizacao (id_local, ala, quarto, leito, andar, bloco)
+internacao (id_internacao, data_entrada, data_saida, motivo, cpf_paciente_FK,
+id_local_FK, cpf_enfermeiro_FK)
+
+##*2. Processo de Normalização Detalhado*##
+
+Apresentamos a normalização de 3 tabelas complexas, da 1FN até a 3FN. Foram escolhidas por possuírem maior
+número de atributos ou por virem de estruturas complexas (generalização/especialização e relacionamento ternário).
+Forma Normal Definição
+1FN Todos os atributos são atômicos — sem listas, sem grupos repetidos. Cada célula contém um único valor.
+2FN Está em 1FN + não há dependências parciais: todo atributo não-chave depende da chave primária inteira
+
+(relevante quando a PK é composta).
+
+3FN Está em 2FN + não há dependências transitivas: nenhum atributo não-chave depende de outro atributo
+
+não-chave.
+
+*A) Tabela: Internação*
+Resolve o relacionamento ternário obrigatório entre Paciente, Localização e Enfermeiro. A PK é simples
+(id_internacao); as FKs não são sublinhadas.
+Etapa Estrutura / Descrição
+Inicial (Não
+Normalizada)
+
+internacao (id_internacao, data_entrada, motivo, cpf_paciente,
+nome_paciente, id_local, ala, quarto, cpf_enfermeiro,
+nome_enfermeiro)
+
+1FN Remoção de atributos compostos e repetitivos. Todos os campos são atômicos.
+2FN Como a chave é simples (id_internacao), não há dependências parciais — já está em 2FN.
+3FN internacao (id_internacao, data_entrada, data_saida, motivo,
+
+cpf_paciente_FK, id_local_FK, cpf_enfermeiro_FK)
+Campos como nome_paciente ou ala foram movidos para suas tabelas
+de origem. As FKs (cpf_paciente_FK, id_local_FK,
+cpf_enfermeiro_FK) não são sublinhadas pois não fazem parte da
+PK.
+
+*B) Tabela: Funcionário (Especialização)*
+Dados comuns a médicos, enfermeiros e administrativos.
+Etapa Estrutura / Descrição
+Inicial funcionario (cpf_func, nome, salario, cargo, crm, especialidade,
+
+coren, setor)
+
+1FN e 2FN Atributos atômicos e dependentes da chave primária (cpf_func). PK simples → não há dependências
+
+parciais — já está em 2FN.
+
+3FN Remoção de dependências de especialização: crm, coren e setor são
+nulos dependendo do cargo. Criadas as tabelas medico, enfermeiro
+e administrativo vinculadas pelo CPF:
+medico (cpf_func_FK, crm, especialidade, turno)
+enfermeiro (cpf_func_FK, coren, turno, nivel_formacao)
+administrativo (cpf_func_FK, setor, nivel_acesso, ramal)
+
+*C) Tabela: Item_Receita (Relacionamento N:N)*
+Associação entre Receitas e Medicamentos.
+Etapa Estrutura / Descrição
+Inicial receita (id_receita, data, posologia, lista_medicamentos)
+1FN O campo multivalorado lista_medicamentos viola a 1FN. Solução:
+criar a tabela de ligação com PK composta. A posologia foi movida
+para item_receita pois a dose pode variar por medicamento:
+receita (id_receita, data_emissao, validade, id_consulta_FK)
+item_receita (id_receita_FK, id_medicamento_FK, posologia)
+2FN e 3FN Em item_receita, a PK é composta (id_receita_FK + id_medicamento_FK) — ambos sublinhados. A
+posologia depende da chave composta inteira (não parcialmente), portanto não há dependências
+parciais. Também não há dependências transitivas. A tabela já está em 3FN.
+
+##*3. Esquema Lógico Completo Final (Normalizado)*##
+Este é o esquema final que garante a integridade dos dados e a ausência de redundâncias:
+— departamento (id_depto, nome)
+— funcionario (cpf_func, nome, data_nasc, telefone, salario, cargo, id_depto_FK)
+— medico (cpf_func_FK, crm, especialidade, turno)
+— enfermeiro (cpf_func_FK, coren, turno, nivel_formacao)
+— administrativo (cpf_func_FK, setor, nivel_acesso, ramal)
+— plantao (id_plantao, data, hora_inicio, hora_fim, tipo, cpf_func_FK)
+— paciente (cpf_paciente, nome, data_nasc, telefone, tipo_sanguineo)
+— prontuario (id_prontuario, cpf_paciente_FK)
+— consulta (id_consulta, data, hora, tipo, status, cpf_medico_FK, cpf_paciente_FK)
+— exame (id_exame, tipo, data_realizacao, resultado, id_prontuario_FK,
+cpf_medico_FK)
+— fornecedor (cnpj, nome_empresa, telefone, email)
+— medicamento (id_medicamento, nome, principio_ativo, qtd_estoque,
+cnpj_fornecedor_FK)
+— receita (id_receita, data_emissao, validade, id_consulta_FK)
+— item_receita (id_receita_FK, id_medicamento_FK, posologia)
+— localizacao (id_local, ala, quarto, leito, andar, bloco)
+— internacao (id_internacao, data_entrada, data_saida, motivo, cpf_paciente_FK,
+id_local_FK, cpf_enfermeiro_FK)
