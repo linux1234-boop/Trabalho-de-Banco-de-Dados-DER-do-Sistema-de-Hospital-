@@ -5,12 +5,12 @@ normalização para eliminar redundâncias e anomalias de atualização.
 
 
 
-##*1. Mapeamento para o Modelo Relacional (Esquema Lógico)*##
+__1. Mapeamento para o Modelo Relacional (Esquema Lógico)__
 Abaixo apresentamos o mapeamento das entidades e relacionamentos para o modelo relacional, seguindo as
 convenções de chaves primárias (negrito + sublinhado) e chaves estrangeiras (sufixo _FK, sem sublinhado).
 
 *Núcleo de Funcionários e Estrutura*
-• departamento (id_depto, nome)
+• departamento (__id_depto__, nome)
 • funcionario (cpf_func, nome, data_nasc, telefone, salario, cargo, id_depto_FK)
 • medico (cpf_func_FK, crm, especialidade, turno)
 • enfermeiro (cpf_func_FK, coren, turno, nivel_formacao)
