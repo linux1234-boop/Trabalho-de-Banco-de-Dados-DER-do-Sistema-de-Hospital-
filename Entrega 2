@@ -11,7 +11,7 @@ convenções de chaves primárias (negrito + sublinhado) e chaves estrangeiras (
 
 *Núcleo de Funcionários e Estrutura*
 • departamento (*id_depto*, nome)
-• funcionario (cpf_func, nome, data_nasc, telefone, salario, cargo, id_depto_FK)
+• funcionario (*cpf_func*, nome, data_nasc, telefone, salario, cargo, id_depto_FK)
 • medico (cpf_func_FK, crm, especialidade, turno)
 • enfermeiro (cpf_func_FK, coren, turno, nivel_formacao)
 • administrativo (cpf_func_FK, setor, nivel_acesso, ramal)
@@ -20,7 +20,7 @@ Obs.: em medico, enfermeiro e administrativo, cpf_func_FK é simultaneamente PK 
 
 
 *Núcleo de Pacientes e Atendimento*
-• paciente (cpf_paciente, nome, data_nasc, telefone, tipo_sanguineo)
+• paciente (*cpf_paciente*, nome, data_nasc, telefone, tipo_sanguineo)
 • prontuario (*id_prontuario*, cpf_paciente_FK)
 • consulta (*id_consulta*, data, hora, tipo, status, cpf_medico_FK, cpf_paciente_FK)
 • exame (*id_exame, tipo*, data_realizacao, resultado, id_prontuario_FK, cpf_medico_FK)
@@ -30,7 +30,7 @@ Obs.: em medico, enfermeiro e administrativo, cpf_func_FK é simultaneamente PK 
 A relação N:1 entre Medicamento e Fornecedor é resolvida com FK direta em medicamento. A relação N:N entre
 Receita e Medicamento origina item_receita com PK composta. A posologia fica em item_receita pois pode variar
 por medicamento prescrito.
-• fornecedor (cnpj, nome_empresa, telefone, email)
+• fornecedor (*cnpj*, nome_empresa, telefone, email)
 • medicamento (*id_medicamento*, nome, principio_ativo, qtd_estoque,
 cnpj_fornecedor_FK)
 • receita (*id_receita*, data_emissao, validade, id_consulta_FK)
@@ -54,12 +54,12 @@ medico (cpf_func_FK, crm, especialidade, turno)
 enfermeiro (cpf_func_FK, coren, turno, nivel_formacao)
 administrativo (cpf_func_FK, setor, nivel_acesso, ramal)
 plantao (*id_plantao*, data, hora_inicio, hora_fim, tipo, cpf_func_FK)
-paciente (cpf_paciente, nome, data_nasc, telefone, tipo_sanguineo)
+paciente (*cpf_paciente*, nome, data_nasc, telefone, tipo_sanguineo)
 prontuario (*id_prontuario*, cpf_paciente_FK)
 consulta (*id_consulta*, data, hora, tipo, status, cpf_medico_FK, cpf_paciente_FK)
 exame (*id_exame*, tipo, data_realizacao, resultado, id_prontuario_FK,
 cpf_medico_FK)
-fornecedor (cnpj, nome_empresa, telefone, email)
+fornecedor (*cnpj*, nome_empresa, telefone, email)
 medicamento (*id_medicamento*, nome, principio_ativo, qtd_estoque,
 cnpj_fornecedor_FK)
 receita (*id_receita*, data_emissao, validade, id_consulta_FK)
@@ -106,7 +106,7 @@ PK.
 *B) Tabela: Funcionário (Especialização)*
 Dados comuns a médicos, enfermeiros e administrativos.
 Etapa Estrutura / Descrição
-Inicial funcionario (cpf_func, nome, salario, cargo, crm, especialidade,
+Inicial funcionario (*cpf_func*, nome, salario, cargo, crm, especialidade,
 
 coren, setor)
 
