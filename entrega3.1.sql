@@ -136,7 +136,6 @@ INSERT INTO consulta (hora, tipo, status, cpf_medico_FK, id_paciente_FK) VALUES
 ('13:30:00', 'Rotina Geral', 'Realizada', '10100000014', 9),
 ('10:30:00', 'Crise de Enxaqueca', 'Agendada', '10100000015', 10);
 
--- 10 Linhas: exame
 INSERT INTO exame (tipo, data_realizacao, resultado, id_prontuario_FK, cpf_medico_FK) VALUES
 ('Eletrocardiograma', '2026-06-25', 'Ritmo sinusal normal.', 1, '10100000001'),
 ('Hemograma Completo', '2026-06-25', 'Anemia leve identificada.', 2, '10100000001'),
@@ -149,7 +148,7 @@ INSERT INTO exame (tipo, data_realizacao, resultado, id_prontuario_FK, cpf_medic
 ('Ureia e Creatinina', '2026-06-28', 'Função renal preservada.', 9, '10100000014'),
 ('Eletroencefalograma', '2026-06-29', 'Atividade elétrica bem organizada.', 10, '10100000015');
 
--- 10 Linhas: fornecedor
+
 INSERT INTO fornecedor (cnpj, nome_empresa, telefone, email) VALUES
 ('11000000000101', 'MedGeral Distribuidora S.A.', '1133331111', 'vendas@medgeral.com'),
 ('11000000000102', 'Eurofarma Laboratórios', '1133332222', 'hospitalar@eurofarma.com'),
