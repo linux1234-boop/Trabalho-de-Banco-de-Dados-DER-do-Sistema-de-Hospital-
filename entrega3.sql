@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS internacao, localizacao, item_receita, receita, medicamento, fornecedor, exame, consulta, prontuario, paciente, plantao, administrativo, enfermeiro, medico, funcionario, departamento;
 SET FOREIGN_KEY_CHECKS = 1;
 
--- Tabela: departamento
+
 CREATE TABLE departamento (
     id_depto INT AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE departamento (
     CONSTRAINT pk_departamento PRIMARY KEY (id_depto)
 );
 
--- Tabela: funcionario
+
 CREATE TABLE funcionario (
     cpf_func VARCHAR(11),
     nome VARCHAR(100) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE medico (
     CONSTRAINT uq_crm UNIQUE (crm)
 );
 
--- Tabela: enfermeiro
+
 CREATE TABLE enfermeiro (
     cpf_func_FK VARCHAR(11),
     coren VARCHAR(20) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE enfermeiro (
     CONSTRAINT uq_coren UNIQUE (coren)
 );
 
--- Tabela: administrativo
+
 CREATE TABLE administrativo (
     cpf_func_FK VARCHAR(11),
     setor VARCHAR(50) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE administrativo (
     CONSTRAINT fk_admin_funcionario FOREIGN KEY (cpf_func_FK) REFERENCES funcionario (cpf_func) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Tabela: plantao
+
 CREATE TABLE plantao (
     id_plantao INT AUTO_INCREMENT,
     data DATE NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE plantao (
     CONSTRAINT fk_plantao_funcionario FOREIGN KEY (cpf_func_FK) REFERENCES funcionario (cpf_func) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Tabela: paciente
+
 CREATE TABLE paciente (
     id_paciente INT AUTO_INCREMENT,
     cpf_paciente VARCHAR(11) NOT NULL,
@@ -83,7 +83,6 @@ CREATE TABLE paciente (
     CONSTRAINT uq_cpf_paciente UNIQUE (cpf_paciente)
 );
 
--- Tabela: prontuario
 CREATE TABLE prontuario (
     id_prontuario INT AUTO_INCREMENT,
     data_abertura DATE NOT NULL,
@@ -95,7 +94,7 @@ CREATE TABLE prontuario (
     CONSTRAINT uq_prontuario_paciente UNIQUE (id_paciente_FK)
 );
 
--- Tabela: consulta
+
 CREATE TABLE consulta (
     id_consulta INT AUTO_INCREMENT,
     hora TIME NOT NULL,
@@ -108,7 +107,7 @@ CREATE TABLE consulta (
     CONSTRAINT fk_consulta_paciente FOREIGN KEY (id_paciente_FK) REFERENCES paciente (id_paciente) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- Tabela: exame
+
 CREATE TABLE exame (
     id_exame INT AUTO_INCREMENT,
     tipo VARCHAR(100) NOT NULL,
@@ -121,7 +120,7 @@ CREATE TABLE exame (
     CONSTRAINT fk_exame_medico FOREIGN KEY (cpf_medico_FK) REFERENCES medico (cpf_func_FK) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- Tabela: fornecedor
+
 CREATE TABLE fornecedor (
     id_fornecedor INT AUTO_INCREMENT,
     cnpj VARCHAR(14) NOT NULL,
@@ -132,7 +131,7 @@ CREATE TABLE fornecedor (
     CONSTRAINT uq_cnpj_fornecedor UNIQUE (cnpj)
 );
 
--- Tabela: medicamento (Id_medicamento, nome, principio, estoque_atual e estoque_minimo)
+
 CREATE TABLE medicamento (
     id_medicamento INT AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -147,7 +146,7 @@ CREATE TABLE medicamento (
     CONSTRAINT chk_estoque_minimo CHECK (estoque_minimo >= 0)
 );
 
--- Tabela: receita (Adicionado consulta, data, validade e quantidade_de_uso)
+
 CREATE TABLE receita (
     id_receita INT AUTO_INCREMENT,
     data DATE NOT NULL,
@@ -158,7 +157,7 @@ CREATE TABLE receita (
     CONSTRAINT fk_receita_consulta FOREIGN KEY (id_consulta_FK) REFERENCES consulta (id_consulta) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Tabela: item_receita
+
 CREATE TABLE item_receita (
     id_receita_FK INT,
     id_medicamento_FK INT,
@@ -168,7 +167,7 @@ CREATE TABLE item_receita (
     CONSTRAINT fk_item_medicamento FOREIGN KEY (id_medicamento_FK) REFERENCES medicamento (id_medicamento) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- Tabela: localizacao
+
 CREATE TABLE localizacao (
     id_local INT AUTO_INCREMENT,
     ala VARCHAR(50) NOT NULL,
@@ -180,7 +179,7 @@ CREATE TABLE localizacao (
     CONSTRAINT uq_localizacao_fisica UNIQUE (ala, quarto, leito, andar, bloco)
 );
 
--- Tabela: internacao
+
 CREATE TABLE internacao (
     id_internacao INT AUTO_INCREMENT,
     data_entrada DATE NOT NULL,
